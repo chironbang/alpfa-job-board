@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Admin Login - ALPFA Atlanta</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/styles.css" /> <!-- Link to the new CSS file -->
+		<style>
+			/* Additional styling for the login form */
+			.login-container {
+				max-width: 400px;
+				margin: 5em auto;
+				padding: 2em;
+				background-color: #fff;
+				border: 1px solid #000;
+				border-radius: 8px;
+				text-align: center;
+			}
+			.login-container h2 {
+				font-size: 2em;
+				color: #000;
+				margin-bottom: 1em;
+			}
+			.login-container input[type="text"],
+			.login-container input[type="password"] {
+				width: 100%;
+				padding: 0.5em;
+				margin: 0.5em 0;
+				border: 1px solid #000;
+				border-radius: 4px;
+			}
+			.login-container input[type="submit"] {
+				background-color: #e74c3c;
+				color: #fff;
+				border: none;
+				padding: 0.5em 2em;
+				border-radius: 4px;
+				cursor: pointer;
+				transition: background-color 0.3s;
+			}
+			.login-container input[type="submit"]:hover {
+				background-color: #c0392b;
+			}
+		</style>
+	</head>
+	<body class="admin-page is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header">
+					<!-- Logo -->
+						<h1><a href="home.html">ALPFA Atlanta</a></h1>
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="home.html">Home</a></li>
+								<li class="current"><a href="admin.html">Admin</a></li>
+								<li><a href="employers.html">Employers</a></li>
+								<li><a href="applicant.html">Applicants</a></li>
+							</ul>
+						</nav>
+				</section>
+
+			<!-- Main Content -->
+				<section id="main" class="container">
+					<div class="login-container">
+						<h2>Admin Login</h2>
+						<form action="admin_dashboard.html" method="post">
+							<input type="text" name="username" placeholder="Username" required />
+							<input type="password" name="password" placeholder="Password" required />
+							<input type="submit" value="Login" />
+						</form>
+					</div>
+				</section>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

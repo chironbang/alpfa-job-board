@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPFA Atlanta - Employer Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-bg: #ecf0f1;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--secondary-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: var(--secondary-color);
+            color: #ffffff;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+        }
+        
+        nav ul li {
+            margin-right: 20px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: calc(50% - 10px);
+        }
+        
+        .full-width {
+            width: 100%;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+        }
+        
+        #jobForm {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #jobForm input, #jobForm textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        #applicantsList {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        #applicantsList li {
+            background: var(--light-bg);
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #filterForm {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        #filterForm input {
+            flex: 1;
+            margin-right: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <h1>ALPFA Atlanta - Employer Dashboard</h1>
+                <ul>
+                    <li><a href="#postJob">Post Job</a></li>
+                    <li><a href="#applicants">Applicants</a></li>
+                    <li><a href="#analytics">Analytics</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="card full-width" id="postJob">
+                <h2>Post a New Job</h2>
+                <form id="jobForm">
+                    <input type="text" id="jobTitle" placeholder="Job Title" required>
+                    <input type="text" id="requiredSkills" placeholder="Required Skills (comma-separated)" required>
+                    <textarea id="jobDescription" placeholder="Job Description" required></textarea>
+                    <button type="submit" class="btn">Post Job</button>
+                </form>
+            </div>
+            
+            <div class="card" id="applicants">
+                <h2>Applicants</h2>
+                <form id="filterForm">
+                    <input type="text" id="keywordFilter" placeholder="Filter by keyword">
+                    <input type="number" id="experienceFilter" placeholder="Min. years of experience">
+                    <button type="submit" class="btn">Filter</button>
+                </form>
+                <ul id="applicantsList">
+                    <!-- Applicants will be dynamically added here -->
+                </ul>
+            </div>
+            
+            <div class="card" id="analytics">
+                <h2>Analytics Dashboard</h2>
+                <canvas id="applicantsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data for demonstration
+        const jobs = [
+            { title: "Financial Analyst", applicants: 15 },
+            { title: "Software Engineer", applicants: 23 },
+            { title: "Marketing Specialist", applicants: 18 }
+        ];
+
+        const applicants = [
+            { name: "John Doe", role: "Financial Analyst", experience: 5, skills: "Excel, Financial Modeling" },
+            { name: "Jane Smith", role: "Software Engineer", experience: 3, skills: "JavaScript, React" },
+            { name: "Mike Johnson", role: "Marketing Specialist", experience: 7, skills: "SEO, Content Marketing" }
+        ];
+
+        // Job Form Submission
+        document.getElementById('jobForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Job posted successfully!');
+            this.reset();
+        });
+
+        // Filter Form Submission
+        document.getElementById('filterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const keyword = document.getElementById('keywordFilter').value.toLowerCase();
+            const minExperience = parseInt(document.getElementById('experienceFilter').value) || 0;
+            
+            const filteredApplicants = applicants.filter(applicant => 
+                (applicant.skills.toLowerCase().includes(keyword) || applicant.role.toLowerCase().includes(keyword)) &&
+                applicant.experience >= minExperience
+            );
+            
+            renderApplicants(filteredApplicants);
+        });
+
+        // Render Applicants List
+        function renderApplicants(applicantsList) {
+            const list = document.getElementById('applicantsList');
+            list.innerHTML = '';
+            applicantsList.forEach(applicant => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div>
+                        <strong>${applicant.name}</strong> - ${applicant.role}<br>
+                        Experience: ${applicant.experience} years<br>
+                        Skills: ${applicant.skills}
+                    </div>
+                    <button class="btn" onclick="scheduleInterview('${applicant.name}')">Schedule Interview</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        // Schedule Interview
+        function scheduleInterview(name) {
+            alert(`Interview scheduled with ${name}`);
+        }
+
+        // Render Analytics Chart
+        function renderChart() {
+            const ctx = document.getElementById('applicantsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: jobs.map(job => job.title),
+                    datasets: [{
+                        label: '# of Applicants',
+                        data: jobs.map(job => job.applicants),
+                        backgroundColor: 'rgba(52, 152, 219, 0.6)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Applicants per Job Role'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initial render
+        renderApplicants(applicants);
+        renderChart();
+    </script>
+</body>
+</html>

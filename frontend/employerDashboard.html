@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Employer Dashboard - ALPFA Atlanta</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" /> <!-- Link to the shared CSS file -->
+    <style>
+        /* Container for the dashboard */
+        .dashboard-container {
+            margin: 3em auto;
+            text-align: center;
+            max-width: 1200px;
+            padding: 0 2em;
+        }
+        /* Header styling */
+        .dashboard-header {
+            margin-bottom: 2em;
+        }
+        .dashboard-header h2 {
+            font-size: 3em;
+            color: #d52349; /* Heading color */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+        }
+        /* Content area styling */
+        .dashboard-content {
+            background-color: #ffffff; /* Change to white for contrast */
+            color: #000; /* Text color inside the content area */
+            padding: 2em;
+            margin: 2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            transition: transform 0.3s; /* Smooth transition for hover effect */
+        }
+        .dashboard-content:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+        }
+        /* Button styling */
+        .button {
+            background-color: #d52349; /* Button color */
+            color: #fff;
+            border: none;
+            padding: 0.75em 2em; /* Increased padding for better touch targets */
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+            text-decoration: none; /* Remove underline from links */
+            display: inline-block; /* Make links behave like buttons */
+            margin: 0.5em; /* Space between buttons */
+            font-size: 1.1em; /* Slightly larger font size */
+        }
+        .button:hover {
+            background-color: #c0392b; /* Darker red on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+        .welcome-container, .request-container {
+            background-color: #f9f9f9; /* Light background for separation */
+            padding: 1.5em; /* Adjust padding for a cleaner look */
+            margin-bottom: 1.5em; /* Space between containers */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+        /* Optional: Add some margin to the dashboard header */
+        .dashboard-header {
+            margin-bottom: 1.5em; /* Adjust margin for better spacing */
+        }
+    </style>
+</head>
+<body class="homepage is-preload">
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        <section id="header">
+            <!-- Logo -->
+                <h1><a href="home.html">ALPFA Atlanta</a></h1>
+            <!-- Nav -->
+                <nav id="nav">
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="admin.html">Admin</a></li>
+                        <li class="current"><a href="employerDashboard.html">Employers</a></li>
+                        <li><a href="applicant.html">Applicants</a></li>
+                    </ul>
+                </nav>
+        </section>
+
+        <!-- Main Content -->
+        <section id="main" class="dashboard-container">
+            <div class="dashboard-header">
+                <h2>Employer Dashboard</h2>
+            </div>
+            <div class="dashboard-content">
+                <div class="welcome-container">
+                    <h3>Welcome, [Employer Name]</h3>
+                    <p>Manage your job postings and track applicants here.</p>
+                    <div class="dashboard-actions">
+                        <a href="postJob.html" class="button">Post a Job</a>
+                        <a href="applicantDetails.html" class="button">View Applicants</a>
+                    </div>
+                </div>
+                <div class="request-container">
+                    <h3>Request a Candidate</h3>
+                    <form id="requestForm" onsubmit="return submitRequest();">
+                        <input type="text" name="candidateName" placeholder="Candidate Name" required />
+                        <input type="text" name="role" placeholder="Role Requested" required />
+                        <textarea name="description" placeholder="Description of the candidate" rows="4" required></textarea>
+                        <input type="submit" value="Submit Request" class="button" />
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        function submitRequest() {
+            // Here you would typically send the form data to a server
+            alert("Successfully submitted! ");
+            
+            // Optionally, you can clear the form fields after submission
+            document.getElementById('requestForm').reset();
+            
+            return false; // Prevent form submission for demonstration
+        }
+    </script>
+
+</body>
+</html>
